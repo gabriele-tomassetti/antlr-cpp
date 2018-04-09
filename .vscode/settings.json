@@ -1,0 +1,16 @@
+{
+    "antlr4.generation": {
+        "mode": "external",
+        "outputDir": "antlr4-runtime",
+        "language": "Cpp",
+        "listeners": true,
+        "visitors": true
+    },
+    "files.associations": {
+        "iostream": "cpp",
+        "system_error": "cpp",
+        "iosfwd": "cpp",
+        "typeinfo": "cpp",
+        "string_view": "cpp"
+    }
+}

@@ -1,0 +1,8 @@
+composition:
+    draw small square in red at center, top
+    draw small square in purple at left, center
+    draw small square in purple at right, center
+    draw small square in red at center, bottom
+    draw medium square in orange at center, center
+    draw small circle in green at center, bottom
+    write medium "weird!" in blue at left, bottom
