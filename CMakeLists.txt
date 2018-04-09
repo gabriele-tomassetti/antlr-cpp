@@ -184,7 +184,11 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CIMG_CFLAGS}")
 
 # to disable warnings for CImg
 if (NOT WIN32)
-  set( CMAKE_CXX_FLAGS "-Wdeprecated" )
+  set(CMAKE_CXX_FLAGS "-Wdeprecated" )
+endif()
+
+if (APPLE)
+ set(CMAKE_CXX_FLAGS "-Wdeprecated -std=c++11" )
 endif()
 
 if (MSVC)

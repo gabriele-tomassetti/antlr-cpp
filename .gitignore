@@ -352,10 +352,6 @@ CTestTestfile.cmake
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
 # Fortran module files
 *.mod
 *.smod
@@ -363,9 +359,12 @@ CTestTestfile.cmake
 # Compiled Static libraries
 *.lai
 *.la
-*.a
 
 # Executables
 *.exe
 *.out
 *.app
+
+# Project-specific
+build/
+antlr4-runtime/~Scene

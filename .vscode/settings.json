@@ -3,7 +3,7 @@
         "mode": "external",
         "outputDir": "antlr4-runtime",
         "language": "Cpp",
-        "listeners": true,
+        "listeners": false,
         "visitors": true
     },
     "files.associations": {
