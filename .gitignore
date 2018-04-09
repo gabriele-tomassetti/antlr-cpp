@@ -367,4 +367,4 @@ CTestTestfile.cmake
 
 # Project-specific
 build/
-antlr4-runtime/~Scene
+antlr4-runtime/Scene*

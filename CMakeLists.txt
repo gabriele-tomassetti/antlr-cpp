@@ -257,20 +257,37 @@ if(WIN32)
 endif()
 
 if(APPLE)
-  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime-mac.a")
+  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.dylib")
 else()
-  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.a")
+  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so")
 endif()  
 
 target_link_libraries(antlr4-tutorial ${SYSTEM_LIBS} )
+
+if(UNIX )
+add_custom_command(TARGET antlr4-tutorial POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so"
+        $<TARGET_FILE_DIR:antlr4-tutorial>)
+endif()
 
 if(MSVC)
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dll"
         $<TARGET_FILE_DIR:antlr4-tutorial>)
+endif()
+
+if(APPLE)
+add_custom_command(TARGET antlr4-tutorial POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dylib"
+        $<TARGET_FILE_DIR:antlr4-tutorial>)
+endif()
+
+
+# copy the input file next to the generated executable
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${PROJECT_SOURCE_DIR}/input.scene"
         $<TARGET_FILE_DIR:antlr4-tutorial>)
-endif()
