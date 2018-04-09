@@ -14,7 +14,7 @@ mkdir build
 cd build
 # to run CMake
 cmake ../
-# generate the ANTLR components (read the article to setup ANTLR first)
+# generate the ANTLR components (you have to setup ANTLR, before doing this step)
 antlr4 -Dlanguage=Cpp -no-listener -visitor -o antlr4-runtime Scene.g4
 # to build on Linux and Mac
 make

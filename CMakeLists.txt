@@ -285,7 +285,6 @@ add_custom_command(TARGET antlr4-tutorial POST_BUILD
         $<TARGET_FILE_DIR:antlr4-tutorial>)
 endif()
 
-
 # copy the input file next to the generated executable
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
