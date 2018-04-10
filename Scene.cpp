@@ -212,7 +212,8 @@ void Scene::draw() {
 			int x = getX(512, element.getSize(), element.getX(), element.getText().length());
 			int y = getY(512, element.getSize(), element.getY());
 			CImgList<unsigned char> font = CImgList<unsigned char>::font(getSizeFont(element.getSize()), false);
-			// we have modified the last argument of this function because the VS Compiler complained about va_args
+			// in CImg.h we have modified the last argument of this function
+			// because the VS Compiler complained about va_args
 			image.draw_text(x, y, element.getText().c_str(), el_color, 0, 1, font);
         }
         else if(action == Draw) {            
