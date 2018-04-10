@@ -9,13 +9,13 @@ The project can run on Windows, Linux and Mac. To build it you need CMake instal
 For simplicity this project includes the necessary runtime libraries to run ANTLR.
 
 ```
+# generate the ANTLR components (you have to setup ANTLR, before doing this step)
+antlr4 -Dlanguage=Cpp -no-listener -visitor -o antlr4-runtime Scene.g4
 # create a build directory to keep the main one clean
 mkdir build
 cd build
 # to run CMake
 cmake ../
-# generate the ANTLR components (you have to setup ANTLR, before doing this step)
-antlr4 -Dlanguage=Cpp -no-listener -visitor -o antlr4-runtime Scene.g4
 # to build on Linux and Mac
 make
 # run the executable
