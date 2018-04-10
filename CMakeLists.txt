@@ -259,7 +259,7 @@ endif()
 if(APPLE)
   target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.dylib")
 elseif(UNIX)
-  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so")
+  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so.4.7.1")
 endif()  
 
 target_link_libraries(antlr4-tutorial ${SYSTEM_LIBS})
@@ -267,7 +267,7 @@ target_link_libraries(antlr4-tutorial ${SYSTEM_LIBS})
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so"
+        "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so.4.7.1"
         $<TARGET_FILE_DIR:antlr4-tutorial>)
 endif()
 
