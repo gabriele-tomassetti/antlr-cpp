@@ -1,5 +1,7 @@
 grammar Scene;
 
+// Parser rules
+
 file        : (name NEWLINE (TAB elements+=action NEWLINE?)* ) EOF;
 
 name        : NAME ':';
@@ -15,6 +17,8 @@ shape       : CIRCLE | SQUARE;
 color       : BLACK | BLUE | BROWN | GREEN | RED | ORANGE | PURPLE | YELLOW | WHITE ;
 
 position    : x=(LEFT | CENTER | RIGHT) ',' y=(TOP | CENTER | BOTTOM) ;
+
+// Lexer rules
 
 DRAW        : 'draw' ;
 WRITE       : 'write' ;
@@ -49,5 +53,5 @@ WHITE       : 'white' ;
 NAME        :  [a-zA-Z0-9\-_]+;
 
 NEWLINE     : ('\r'? '\n' | '\r')+ ;
-TAB         : ('\t' | '    ') ;
+TAB         : ('\t' | '        ' | '    ' ) ;
 WHITESPACE  : ' ' -> skip ;

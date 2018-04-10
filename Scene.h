@@ -36,7 +36,6 @@ class Element {
         string      _text;
         Shape       _shape;
         
-        //Action convertAction(string action);
         Color convertColor(string color);
         Scene_Size convertSize(string size);
         void setPosition(string x, string y);

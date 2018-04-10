@@ -3,9 +3,8 @@
 #include "antlr4-runtime/SceneBaseVisitor.h"
 #include "Scene.h"
 
-class  ImageVisitor {
+class  ImageVisitor : SceneBaseVisitor {
 public:    
-    Scene visitFile(SceneParser::FileContext *ctx);
-
+    antlrcpp::Any visitFile(SceneParser::FileContext *ctx);
 };
 

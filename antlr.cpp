@@ -16,6 +16,7 @@ int main(int argc, const char* argv[]) {
     SceneLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     SceneParser parser(&tokens);    
+    
     SceneParser::FileContext* tree = parser.file();
 
     ImageVisitor visitor;

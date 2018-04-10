@@ -2,10 +2,10 @@
 
 using namespace std;
 
-Scene ImageVisitor::visitFile(SceneParser::FileContext *ctx) {                
+antlrcpp::Any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {                
     vector<Element> elements;
-    for (auto element : ctx->elements) {
-                
+    
+    for (auto element : ctx->elements) {                
         Action action;
         string text = "";
         Shape shape = NoShape;
@@ -21,10 +21,11 @@ Scene ImageVisitor::visitFile(SceneParser::FileContext *ctx) {
             action = NoAction;
         
         Element el(action, element->size()->getText(), element->color()->getText(), element->position()->x->getText(), element->position()->y->getText(), text, shape);    
-        elements.push_back(el);
+        elements.push_back(el);		
     }    
-        
-    Scene scene(ctx->name()->NAME()->getText(), elements);
-    return scene;
+        	
+    antlrcpp::Any result = Scene(ctx->name()->NAME()->getText(), elements);
+    
+	return result;
 }
 

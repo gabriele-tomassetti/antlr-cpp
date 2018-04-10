@@ -1,8 +1,6 @@
-#include <iostream>
 #include "Scene.h"
 
 using namespace std;
-
 
 Element::Element(Action action, string size, string color, string x, string y, string text, Shape shape) {    
     _action = action;
@@ -211,10 +209,10 @@ void Scene::draw() {
         Shape shape = element.getShape();       
 	
         if(action == Write) {            
-            int x = getX(512, element.getSize(), element.getX(), element.getText().length());
-            int y = getY(512, element.getSize(), element.getY());
+			int x = getX(512, element.getSize(), element.getX(), element.getText().length());
+			int y = getY(512, element.getSize(), element.getY());
 			CImgList<unsigned char> font = CImgList<unsigned char>::font(getSizeFont(element.getSize()), false);
-			// I've modified the last argument of this function because the MS Compiler complained about va_args
+			// we have modified the last argument of this function because the VS Compiler complained about va_args
 			image.draw_text(x, y, element.getText().c_str(), el_color, 0, 1, font);
         }
         else if(action == Draw) {            

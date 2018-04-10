@@ -258,20 +258,20 @@ endif()
 
 if(APPLE)
   target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.dylib")
-else()
+elseif(UNIX)
   target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so")
 endif()  
 
-target_link_libraries(antlr4-tutorial ${SYSTEM_LIBS} )
+target_link_libraries(antlr4-tutorial ${SYSTEM_LIBS})
 
-if(UNIX )
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so"
         $<TARGET_FILE_DIR:antlr4-tutorial>)
 endif()
 
-if(MSVC)
+if(WIN32)
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dll"
@@ -290,3 +290,15 @@ add_custom_command(TARGET antlr4-tutorial POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${PROJECT_SOURCE_DIR}/input.scene"
         $<TARGET_FILE_DIR:antlr4-tutorial>)
+
+# necessary because the default working directory of Visual Studio
+# is not the same as the one in which the binary is created
+# so we copy the input file twice:
+# one for when you launch the executale in Visual Studio (CTRL+F5)
+# one for when you launch it normally
+if (WIN32)
+add_custom_command(TARGET antlr4-tutorial POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${PROJECT_SOURCE_DIR}/input.scene"
+        $<TARGET_FILE_DIR:antlr4-tutorial>/../)
+endif()
