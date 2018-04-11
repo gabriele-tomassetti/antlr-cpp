@@ -2,13 +2,34 @@
 
 using namespace std;
 
-Element::Element(Action action, string size, string color, string x, string y, string text, Shape shape) {    
+// we create a draw shape element
+Element::Element(Action action, string size, string color, string x, string y, Shape shape) {    
     _action = action;
     _color = convertColor(color);
     _size = convertSize(size);
     _shape = shape;
-    _text = text;
+    _text = "";
     setPosition(x, y);    
+};
+
+// we create a write text eleement
+Element::Element(Action action, string size, string color, string x, string y, string text) {
+	_action = action;
+	_color = convertColor(color);
+	_size = convertSize(size);
+	_shape = NoShape;
+	_text = text;
+	setPosition(x, y);
+};
+
+// we create an invalid action
+Element::Element(Action action) {
+	_action = NoAction;
+	_color = Black;
+	_size = Small;
+	_shape = NoShape;
+	_text = "";
+	setPosition(0, 0);
 };
 
 Shape Element::convertShape(string shape) {

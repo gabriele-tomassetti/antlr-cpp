@@ -2,25 +2,12 @@
 
 using namespace std;
 
-antlrcpp::Any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {                
+antlrcpp::Any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {
     vector<Element> elements;
     
     for (auto element : ctx->elements) {                
-        Action action;
-        string text = "";
-        Shape shape = NoShape;
-        if(element->DRAW()) {
-            action = Draw;            
-            shape = Element::convertShape(element->shape()->getText());
-        }
-        else if(element->WRITE()) {
-            action = Write;
-            text = element->STRING()->getText().substr(1, element->STRING()->getText().length()-2);
-        }
-        else
-            action = NoAction;
-        
-        Element el(action, element->size()->getText(), element->color()->getText(), element->position()->x->getText(), element->position()->y->getText(), text, shape);    
+		antlrcpp::Any el = visitAction(element);
+
         elements.push_back(el);		
     }    
         	
@@ -29,3 +16,25 @@ antlrcpp::Any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {
 	return result;
 }
 
+antlrcpp::Any ImageVisitor::visitAction(SceneParser::ActionContext *ctx) {
+	Action action;
+	
+	if (ctx->DRAW()) {
+		action = Draw;
+		Shape shape = visitShape(ctx->shape());
+		return Element(action, ctx->size()->getText(), ctx->color()->getText(), ctx->position()->x->getText(), ctx->position()->y->getText(), shape);
+	}
+	else if (ctx->WRITE()) {
+		action = Write;
+		string text = ctx->STRING()->getText().substr(1, ctx->STRING()->getText().length() - 2);
+		return Element(action, ctx->size()->getText(), ctx->color()->getText(), ctx->position()->x->getText(), ctx->position()->y->getText(), text);
+	}
+	else
+		action = NoAction;
+
+	return Element(action);
+}
+
+antlrcpp::Any ImageVisitor::visitShape(SceneParser::ShapeContext *ctx) {
+	return Element::convertShape(ctx->getText());
+}

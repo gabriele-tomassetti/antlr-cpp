@@ -15,7 +15,9 @@ enum Color { Black, Blue, Brown, Green, Red, Orange, Purple, Yellow, White };
 
 class Element {
     public:
-        Element(Action action, string size, string color, string x, string y, string text, Shape shape);
+		Element(Action action, string size, string color, string x, string y, Shape shape);
+		Element(Action action, string size, string color, string x, string y, string text);
+		Element(Action action);
         
         Action      getAction();
         Color       getColor();   
