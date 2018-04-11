@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project("Antlr-cpp-tutorial")
 
+# CMake commands copied by the CMake file for CImg
+
 # To use PKG_CHECK_MODULES to find some optional packages
 find_package(PkgConfig)
 
@@ -182,25 +184,27 @@ endif()
 # Add CIMG Flags to Compilation Flags
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CIMG_CFLAGS}")
 
-# to disable warnings for CImg
+# CMake commands for this specific project start here
+
+# to disable some warnings for CImg
 if (NOT WIN32)
-  set(CMAKE_CXX_FLAGS "-Wdeprecated" )
+  set(CMAKE_CXX_FLAGS "-Wdeprecated -Wno-attributes" )
 endif()
 
 if (APPLE)
- set(CMAKE_CXX_FLAGS "-Wdeprecated -std=c++11" )
+  set(CMAKE_CXX_FLAGS "-Wdeprecated -std=c++11" )
 endif()
 
 if (MSVC)
-set(CMAKE_CXX_FLAGS "/EHsc /wd4127 /wd4311 /wd4312 /wd4512 /wd4571 /wd4640 /wd4706 /wd4710 /wd4800 /wd4804 /wd4820 /wd4996")
+  set(CMAKE_CXX_FLAGS "/EHsc /wd4127 /wd4311 /wd4312 /wd4512 /wd4571 /wd4640 /wd4706 /wd4710 /wd4800 /wd4804 /wd4820 /wd4996")
 endif()
 
 
 set(antlr4-tutorial-GENERATED_SRC
-   ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneLexer.cpp 
-   ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneParser.cpp
-   ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneBaseVisitor.cpp   
-   ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneVisitor.cpp   
+  ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneLexer.cpp 
+  ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneParser.cpp
+  ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneBaseVisitor.cpp   
+  ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneVisitor.cpp   
  )
 
 foreach( src_file ${antlr4-tutorial-GENERATED_SRC} )
@@ -245,7 +249,7 @@ endforeach( src_file ${antlr4-tutorial_SRC} )
 
 add_executable(antlr4-tutorial
   ${antlr4-tutorial_SRC}
-  )
+)
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")  
   # see https://github.com/antlr/antlr4/issues/1874
@@ -266,30 +270,30 @@ target_link_libraries(antlr4-tutorial ${SYSTEM_LIBS})
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so"
-        $<TARGET_FILE_DIR:antlr4-tutorial>)
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+  "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so"
+  $<TARGET_FILE_DIR:antlr4-tutorial>)
 endif()
 
 if(WIN32)
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dll"
-        $<TARGET_FILE_DIR:antlr4-tutorial>)
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+  "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dll"
+  $<TARGET_FILE_DIR:antlr4-tutorial>)
 endif()
 
 if(APPLE)
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dylib"
-        $<TARGET_FILE_DIR:antlr4-tutorial>)
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+  "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dylib"
+  $<TARGET_FILE_DIR:antlr4-tutorial>)
 endif()
 
 # copy the input file next to the generated executable
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/input.scene"
-        $<TARGET_FILE_DIR:antlr4-tutorial>)
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+  "${PROJECT_SOURCE_DIR}/input.scene"
+  $<TARGET_FILE_DIR:antlr4-tutorial>)
 
 # necessary because the default working directory of Visual Studio
 # is not the same as the one in which the binary is created
@@ -298,7 +302,7 @@ add_custom_command(TARGET antlr4-tutorial POST_BUILD
 # one for when you launch it normally
 if (WIN32)
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/input.scene"
-        $<TARGET_FILE_DIR:antlr4-tutorial>/../)
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+  "${PROJECT_SOURCE_DIR}/input.scene"
+  $<TARGET_FILE_DIR:antlr4-tutorial>/../)
 endif()
