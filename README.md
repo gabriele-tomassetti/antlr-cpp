@@ -6,11 +6,11 @@ This example shows how to parse a data format file with ANTLR in C++.
 
 The project can run on Windows, Linux and Mac. To build it you need CMake installed on your system. On Windows you need a version of Visual Studio that include support for C++.
 
-For simplicity this project includes the necessary runtime libraries to run ANTLR.
+To solve many common issues with C++ building on different platforms this project is now based on the [CMake script from the official ANTLR4 Cpp Runtime](https://github.com/antlr/antlr4/tree/master/runtime/Cpp/cmake). This should deal with many typical issues in building a C++ projects on different setups and platforms. However, be warned that this will download the ANTLR C++ runtime from the official git repository and will build it. Therefore build time for the first build will be long.
 
 ```
 # generate the ANTLR components (you have to setup ANTLR, before doing this step)
-antlr4 -Dlanguage=Cpp -no-listener -visitor -o antlr4-runtime Scene.g4
+antlr4 -Dlanguage=Cpp -no-listener -visitor -o libs Scene.g4
 # create a build directory to keep the main one clean
 mkdir build
 cd build
