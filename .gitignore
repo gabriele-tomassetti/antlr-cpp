@@ -368,3 +368,15 @@ CTestTestfile.cmake
 # Project-specific
 build/
 antlr4-runtime/Scene*
+libs/Scene.interp
+libs/Scene.tokens
+libs/SceneBaseVisitor.cpp
+libs/SceneBaseVisitor.h
+libs/SceneLexer.cpp
+libs/SceneLexer.h
+libs/SceneLexer.interp
+libs/SceneLexer.tokens
+libs/SceneParser.cpp
+libs/SceneParser.h
+libs/SceneVisitor.cpp
+libs/SceneVisitor.h

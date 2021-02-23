@@ -1,6 +1,27 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.7)
 
 project("Antlr-cpp-tutorial")
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+# compiler must be 11 or 14
+set(CMAKE_CXX_STANDARD 11)
+
+# required if linking to static library
+add_definitions(-DANTLR4CPP_STATIC)
+
+# using /MD flag for antlr4_runtime (for Visual C++ compilers only)
+set(ANTLR4_WITH_STATIC_CRT OFF)
+# add external build for antlrcpp
+include(ExternalAntlr4Cpp)
+# add antrl4cpp artifacts to project environment
+include_directories(${ANTLR4_INCLUDE_DIRS})
+
+# set variable pointing to the antlr tool that supports C++
+# this is not required if the jar file can be found under PATH environment
+set(ANTLR_EXECUTABLE ${CMAKE_CURRENT_SOURCE_DIR}/tools/antlr-4.9.1-complete.jar)
+# add macros to generate ANTLR Cpp code from grammar
+find_package(ANTLR REQUIRED)
 
 # CMake commands copied by the CMake file for CImg
 
@@ -200,94 +221,20 @@ if (MSVC)
 endif()
 
 
-set(antlr4-tutorial-GENERATED_SRC
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneLexer.cpp 
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneParser.cpp
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneBaseVisitor.cpp   
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/SceneVisitor.cpp   
- )
+# Call macro to add lexer and grammar to your build dependencies.
+antlr_target(SceneGrammarParser Scene.g4)
 
-foreach( src_file ${antlr4-tutorial-GENERATED_SRC} )
-      set_source_files_properties(
-          ${src_file}
-          PROPERTIES
-          GENERATED TRUE
-          )
-endforeach( src_file ${antlr4-tutorial-GENERATED_SRC} )
-
-include_directories(
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/misc
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/atn
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/dfa
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/tree
-  ${PROJECT_SOURCE_DIR}/antlr4-runtime/support
-  ${PROJECT_SOURCE_DIR}/
-  ${PROJECT_SOURCE_DIR}/libs/
+# add our project source directories
+include_directories(${PROJECT_SOURCE_DIR}
+					 ${PROJECT_SOURCE_DIR}/libs/
   )
+  
 
-set(antlr4-tutorial_SRC 
-  ${PROJECT_SOURCE_DIR}/antlr.cpp
-  ${PROJECT_SOURCE_DIR}/ImageVisitor.cpp
-  ${PROJECT_SOURCE_DIR}/Scene.cpp
-  ${antlr4-tutorial-GENERATED_SRC}
-  )
+add_executable(antlr4-tutorial antlr.cpp Scene.cpp ImageVisitor.cpp               
+               ${ANTLR_SceneGrammarParser_CXX_OUTPUTS})
 
-if (NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  set (flags_1 "-Wno-overloaded-virtual")
-else()
-  set (flags_1 "-MP /wd4251")
-endif()
-
-foreach( src_file ${antlr4-tutorial_SRC} )
-      set_source_files_properties(
-          ${src_file}
-          PROPERTIES
-          COMPILE_FLAGS "${COMPILE_FLAGS} ${flags_1}"
-          )
-endforeach( src_file ${antlr4-tutorial_SRC} )
-
-add_executable(antlr4-tutorial
-  ${antlr4-tutorial_SRC}
-)
-
-if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")  
-  # see https://github.com/antlr/antlr4/issues/1874
-  target_compile_options(antlr4-tutorial PUBLIC "$<$<CONFIG:DEBUG>:/MT>")
-endif()
-
-if(WIN32)
-  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.lib")
-endif()
-
-if(APPLE)
-  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.dylib")
-elseif(UNIX)
-  target_link_libraries(antlr4-tutorial "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so")
-endif()  
-
-target_link_libraries(antlr4-tutorial ${SYSTEM_LIBS})
-
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-add_custom_command(TARGET antlr4-tutorial POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
-  "${PROJECT_SOURCE_DIR}/libs/libantlr4-runtime.so"
-  $<TARGET_FILE_DIR:antlr4-tutorial>)
-endif()
-
-if(WIN32)
-add_custom_command(TARGET antlr4-tutorial POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
-  "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dll"
-  $<TARGET_FILE_DIR:antlr4-tutorial>)
-endif()
-
-if(APPLE)
-add_custom_command(TARGET antlr4-tutorial POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
-  "${PROJECT_SOURCE_DIR}/libs/antlr4-runtime.dylib"
-  $<TARGET_FILE_DIR:antlr4-tutorial>)
-endif()
+# link required libraries
+target_link_libraries(antlr4-tutorial antlr4_static ${SYSTEM_LIBS})
 
 # copy the input file next to the generated executable
 add_custom_command(TARGET antlr4-tutorial POST_BUILD
@@ -306,3 +253,4 @@ add_custom_command(TARGET antlr4-tutorial POST_BUILD
   "${PROJECT_SOURCE_DIR}/input.scene"
   $<TARGET_FILE_DIR:antlr4-tutorial>/../)
 endif()
+

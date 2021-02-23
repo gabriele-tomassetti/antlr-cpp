@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "antlr4-runtime/antlr4-runtime.h"
-#include "antlr4-runtime/SceneLexer.h"
-#include "antlr4-runtime/SceneParser.h"
+#include "antlr4-runtime.h"
+#include "libs/SceneLexer.h"
+#include "libs/SceneParser.h"
 #include "ImageVisitor.h"
 
 using namespace std;
