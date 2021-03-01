@@ -222,7 +222,7 @@ endif()
 
 
 # Call macro to add lexer and grammar to your build dependencies.
-antlr_target(SceneGrammarParser Scene.g4)
+antlr_target(SceneGrammarParser Scene.g4 VISITOR OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/libs/)
 
 # add our project source directories
 include_directories(${PROJECT_SOURCE_DIR}
