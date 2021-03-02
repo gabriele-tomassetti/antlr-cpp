@@ -8,9 +8,8 @@ The project can run on Windows, Linux and Mac. To build it you need CMake instal
 
 To solve many common issues with C++ building on different platforms this project is now based on the [CMake script from the official ANTLR4 Cpp Runtime](https://github.com/antlr/antlr4/tree/master/runtime/Cpp/cmake). This should deal with many typical issues in building a C++ projects on different setups and platforms. However, be warned that this will download the ANTLR C++ runtime from the official git repository and will build it. Therefore build time for the first build will be long.
 
+
 ```
-# generate the ANTLR components (you have to setup ANTLR, before doing this step)
-antlr4 -Dlanguage=Cpp -no-listener -visitor -o libs Scene.g4
 # create a build directory to keep the main one clean
 mkdir build
 cd build
@@ -24,5 +23,13 @@ make
 # open the "Antlr-cpp-tutorial.sln" file with Visual Studio generate by CMake inside the build directory
 # build and run the project antlr-tutorial (do not select the auto-generated ALL_BUILD)
 ```
+
+The CMake build script will also generate the ANTLR parser automatically. However, you may want to generate the parser manually during development with this command:
+
+```
+# generate the ANTLR components (you have to setup ANTLR in your system, before performing this step)
+antlr4 -Dlanguage=Cpp -no-listener -visitor -o libs Scene.g4
+```
+
 
 **You can read an article on the example on [Getting started with ANTLR in C++](https://tomassetti.me/getting-started-antlr-cpp/)**
