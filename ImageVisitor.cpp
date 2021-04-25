@@ -6,7 +6,7 @@ antlrcpp::Any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {
     vector<Element> elements;
     
     for (auto element : ctx->elements) {                
-		antlrcpp::Any el = visitAction(element);
+		Element el = visitAction(element).as<Element>();
 
         elements.push_back(el);		
     }    
@@ -21,7 +21,7 @@ antlrcpp::Any ImageVisitor::visitAction(SceneParser::ActionContext *ctx) {
 	
 	if (ctx->DRAW()) {
 		action = Draw;
-		Shape shape = visitShape(ctx->shape());
+		Shape shape = visitShape(ctx->shape()).as<Shape>();
 		return Element(action, ctx->size()->getText(), ctx->color()->getText(), ctx->position()->x->getText(), ctx->position()->y->getText(), shape);
 	}
 	else if (ctx->WRITE()) {

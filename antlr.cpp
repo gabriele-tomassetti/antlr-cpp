@@ -20,7 +20,7 @@ int main(int argc, const char* argv[]) {
     SceneParser::FileContext* tree = parser.file();
 
     ImageVisitor visitor;
-    Scene scene = visitor.visitFile(tree);
+    Scene scene = visitor.visitFile(tree).as<Scene>();
     scene.draw();	
 
     return 0;
