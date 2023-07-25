@@ -2,7 +2,7 @@
 
 using namespace std;
 
-antlrcpp::Any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {
+std::any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {
     vector<Element> elements;
     
     for (auto element : ctx->elements) {                
@@ -16,7 +16,7 @@ antlrcpp::Any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {
 	return result;
 }
 
-antlrcpp::Any ImageVisitor::visitAction(SceneParser::ActionContext *ctx) {
+std::any ImageVisitor::visitAction(SceneParser::ActionContext *ctx) {
 	Action action;
 	
 	if (ctx->DRAW()) {
@@ -35,6 +35,6 @@ antlrcpp::Any ImageVisitor::visitAction(SceneParser::ActionContext *ctx) {
 	return Element(action);
 }
 
-antlrcpp::Any ImageVisitor::visitShape(SceneParser::ShapeContext *ctx) {
+std::any ImageVisitor::visitShape(SceneParser::ShapeContext *ctx) {
 	return Element::convertShape(ctx->getText());
 }

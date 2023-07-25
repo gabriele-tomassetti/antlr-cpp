@@ -5,10 +5,10 @@
 
 class  ImageVisitor : SceneBaseVisitor {
 public:    
-    antlrcpp::Any visitFile(SceneParser::FileContext *ctx);
+    std::any visitFile(SceneParser::FileContext *ctx);
 
-	antlrcpp::Any visitAction(SceneParser::ActionContext *ctx);	
+	std::any visitAction(SceneParser::ActionContext *ctx);	
 
-	antlrcpp::Any visitShape(SceneParser::ShapeContext *ctx);
+	std::any visitShape(SceneParser::ShapeContext *ctx);
 };
 
