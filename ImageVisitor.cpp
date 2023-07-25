@@ -11,7 +11,7 @@ std::any ImageVisitor::visitFile(SceneParser::FileContext *ctx) {
         elements.push_back(el);		
     }    
         	
-    antlrcpp::Any result = Scene(ctx->name()->NAME()->getText(), elements);
+    std::any result = Scene(ctx->name()->NAME()->getText(), elements);
     
 	return result;
 }
