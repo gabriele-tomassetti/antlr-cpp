@@ -25,6 +25,11 @@ find_package(ANTLR REQUIRED)
 
 # CMake commands copied by the CMake file for CImg
 
+message("************************************************************************")
+message("* We are going to search for optional libraries.                       *")
+message("* You can ignore any missing library, as long as the project compiles. *")
+message("************************************************************************")
+
 # To use PKG_CHECK_MODULES to find some optional packages
 find_package(PkgConfig)
 
