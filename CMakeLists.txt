@@ -25,6 +25,11 @@ find_package(ANTLR REQUIRED)
 
 # CMake commands copied by the CMake file for CImg
 
+message("************************************************************************")
+message("* We are going to search for optional libraries.                       *")
+message("* You can ignore any missing library, as long as the project compiles. *")
+message("************************************************************************")
+
 # To use PKG_CHECK_MODULES to find some optional packages
 find_package(PkgConfig)
 
@@ -81,7 +86,7 @@ PKG_CHECK_MODULES(OPENEXR OpenEXR)
 PKG_CHECK_MODULES(MAGICK Magick++)
 
 if(NOT WIN32)
-  FIND_PACKAGE(X11)
+  FIND_PACKAGE(X11)    
   FIND_PACKAGE(Threads REQUIRED)
 endif()
 
@@ -160,6 +165,7 @@ endif()
 if(NOT APPLE)
   if(NOT WIN32)
     if(X11_FOUND)
+	  find_package(X11 REQUIRED COMPONENTS Xrandr)
       SET(CIMG_CFLAGS "${CIMG_CFLAGS} ${CIMG_XSHM_CCFLAGS} ${CIMG_XRANDR_CCFLAGS}")
       SET(SYSTEM_LIBS ${SYSTEM_LIBS} Xext Xrandr)
     endif()
